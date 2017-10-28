@@ -1,0 +1,2 @@
+<cfcomponent output="true">
+</cfcomponent>
