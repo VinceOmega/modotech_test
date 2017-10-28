@@ -15,40 +15,46 @@
 	FormData = FORM;
 	oIndex = createObject( 'component', "indexController" );
 
-	oIndex.fetchHeader();
+	try{
+		oIndex.fetchHeader();
 
-	switch(Action){
+		switch(Action){
 
-		case 'home':
-			oIndex.fetchHome();
-			break;
+			case 'home':
+				oIndex.fetchHome();
+				break;
 
-		case 'user':
-			oIndex.fetchUser();
-			break;
+			case 'user':
+				oIndex.fetchUser();
+				break;
 
-		case 'project':
-			oIndex.fetchProject();
-			break;
+			case 'project':
+				oIndex.fetchProject();
+				break;
 
-		case 'addhours':
-			oIndex.fetchAddHours();
-			break;
+			case 'addhours':
+				oIndex.fetchAddHours();
+				break;
 
-		case 'edithours':
-			oIndex.fetchEditHours();
-			break;
+			case 'edithours':
+				oIndex.fetchEditHours();
+				break;
 
-		case 'reviewhours':
-			oIndex.fetchReviewHours();
-			break;
+			case 'reviewhours':
+				oIndex.fetchReviewHours();
+				break;
 
-		default
-			oIndex.fetchHome();
-			break;
+			default:
+				oIndex.fetchHome();
+				break;
+
+		}
+
+		oIndex.fetchFooter();
+	} catch(any cfcatch){
+
+		writeDump( cfcatch );
 
 	}
-
-	oIndex.fetchFooter();
 
 </cfscript>
