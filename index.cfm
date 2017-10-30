@@ -1,6 +1,8 @@
+
 <cfscript>
 
 	param URL.a='home';
+	this.mappings['components'] = getDirectoryFromPath(getCurrentTemplatePath());
 
 	Action 		= '';
 	FormData 	= structNew();
@@ -12,10 +14,12 @@
 		FORM[ index ] = URL[ index ];
 	}
 
-	FormData = FORM;
-	oIndex = createObject( 'component', "indexController" );
+	oIndex 		= createObject('component', 'interview.Larry.indexController');
+	FormData 	= FORM;
 
+	
 	try{
+
 		oIndex.fetchHeader();
 
 		switch(Action){
@@ -25,7 +29,7 @@
 				break;
 
 			case 'user':
-				oIndex.fetchUser();
+				oIndex.fetchUsers();
 				break;
 
 			case 'project':
@@ -40,10 +44,6 @@
 				oIndex.fetchEditHours();
 				break;
 
-			case 'reviewhours':
-				oIndex.fetchReviewHours();
-				break;
-
 			default:
 				oIndex.fetchHome();
 				break;
@@ -51,10 +51,12 @@
 		}
 
 		oIndex.fetchFooter();
+
 	} catch(any cfcatch){
 
 		writeDump( cfcatch );
 
 	}
+
 
 </cfscript>

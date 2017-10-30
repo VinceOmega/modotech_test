@@ -252,9 +252,9 @@
 	from intUsers
 </cfquery>
 
-<cfdump var="#intClientsDisplay#">
-<cfdump var="#intEntriesDisplay#">
-<cfdump var="#intProjectsDisplay#">
-<cfdump var="#intUsersDisplay#">
+<cfdump var="#intClientsDisplay#" 	label="Clients - intClients">
+<cfdump var="#intEntriesDisplay#" 	label="Enteries - intEntries">
+<cfdump var="#intProjectsDisplay#" 	label="Projects - intProjects">
+<cfdump var="#intUsersDisplay#" 	label="User - intUsers">
 
 
