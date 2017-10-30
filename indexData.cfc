@@ -136,7 +136,7 @@
 
 	</cffunction>
 
-	<cffunction name="editHours" 		returntype="query" output="true">
+	<cffunction name="editHours" 	returntype="query" output="true">
 		<cfargument name="FormData" 	type="struct" required="true">
 
 		<cftransaction>

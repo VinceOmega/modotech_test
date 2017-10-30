@@ -5,7 +5,7 @@
 	<cfset oSession 	= createObject( 'component', 'interview.Larry.sessionController' )>
 
 	<cffunction name="fetchHeader" returntype="void" output="true">
-		<cfargument name="FormData" required="false"> 
+		<cfargument name="FormData" required="false" default="#structNew( )#"> 
 
 		<cfset var CurrentUser 				= structNew( )>
 		
@@ -18,7 +18,7 @@
 	</cffunction>
 
 	<cffunction name="fetchFooter" returntype="void" output="true">
-		<cfargument name="FormData" required="false">
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfset var CurrentUser = structNew( )>
 		
@@ -31,7 +31,7 @@
 	</cffunction>
 
 	<cffunction name="fetchHome" returntype="void" output="true">
-		<cfargument name="FormData" required="false">
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfscript>
 
@@ -46,7 +46,7 @@
 	</cffunction>
 
 	<cffunction name="fetchUsers" returntype="void" output="true">
-		<cfargument name="FormData" required="false">
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfscript>
 
@@ -90,7 +90,7 @@
 	</cffunction>
 
 	<cffunction name="fetchAddHours" returntype="void" output="true">
-		<cfargument name="FormData" required="false">
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfscript>
 
@@ -100,7 +100,7 @@
 	</cffunction>
 
 	<cffunction name="fetchEditHours" returntype="void" output="true">
-		<cfargument name="FormData" required="false">
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfscript>
 
