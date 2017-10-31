@@ -45,7 +45,7 @@
 				
 			}
 
-			SESSION[ 'CurrentUser' ][ 'ManagedUserList' ] 	= ManagedUserList;
+			SESSION[ 'CurrentUser' ][ 'UsersManaged' ] 	= ManagedUserList;
 
 			return SESSION[ 'CurrentUser' ];
 

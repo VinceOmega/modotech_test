@@ -35,11 +35,13 @@
 
 		<cfscript>
 
-			var CurrentUser = structNew( );
-			var HomeData 	= queryNew( '' );
+			var CurrentUser 	= structNew( );
+			var CurrentProject 	= structNew( );
+			var HomeData 		= queryNew( '' );
 
 			CurrentUser 	= oSession.fetchCurrentUser( );
-			HomeData 		= oData.getHome( CurrentUser[ 'UserNumber' ] );
+			CurrentProject 	= oSession.fetchProject( );
+			HomeData 		= oData.getHome( CurrentUser[ 'UserNumber' ], CurrentUser[ 'UsersManaged' ], CurrentProject[ 'ProjectNumber' ] );
 
 			oRenderer.renderHome( FormData, HomeData );
 

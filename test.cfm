@@ -13,6 +13,11 @@
 		 	INNER JOIN 	intUsers 		as u ON u.UserNumber 		= e.UserNumber
 		 	INNER JOIN 	intProjects 	as p ON p.ProjectNumber 	= e.ProjectNumber
 
+		 	WHERE e.UserNumber 		= 	<cfqueryparam value="1"  cfsqltype="cf_sql_integer">
+
+		 	OR u.UserNumber 	IN  ( <cfqueryparam value="3,4"  cfsqltype="cf_sql_integer" list="yes"> )
+
+
 		</cfquery>
 
 		<cfdump var="#Results#">

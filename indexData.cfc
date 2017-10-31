@@ -2,8 +2,9 @@
 
 
 	<cffunction name="getHome" 		returntype="query" output="false">
-		<cfargument name="UserId" 			type="string" required="false" default="">
-		<cfargument name="ManagedUserList" 	type="string" required="false" default="">
+		<cfargument name="UserId" 			type="numeric" 	required="false" default="">
+		<cfargument name="ManagedUserList" 	type="string" 	required="false" default="">
+		<cfargument name="ProjectNumber" 	type="numeric" 	required="false" default="">
 
 		<cfset var Results = queryNew( '' )>
 
@@ -19,7 +20,10 @@
 		 	<cfif UserId NEQ ''>
 		 		WHERE e.UserNumber 		= 	<cfqueryparam value="#UserId#"  cfsqltype="cf_sql_integer">
 		 		<cfif ManagedUserList NEQ ''>
-		 			AND e.Supervisor 	=  <cfqueryparam value="#UserId#"  cfsqltype="cf_sql_integer">
+		 			OR u.UserNumber 	IN  ( <cfqueryparam value="#ManagedUserList#"  cfsqltype="cf_sql_integer" list="yes"> )
+		 		</cfif>
+		 		<cfif ProjectNumber NEQ ''>
+		 			AND e.ProjectNumber = <cfqueryparam value="#ProjectNumber#" cfsqltype="cf_sql_integer">
 		 		</cfif>
 		 	</cfif>
 		</cfquery>
@@ -50,7 +54,7 @@
 		<cfquery datasource="ModoInt" name="Results">
 			SELECT 		UserNumber
 			FROM 		intUsers
-			WHERE 		UserNumber = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
+			WHERE 		Supervisor = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
