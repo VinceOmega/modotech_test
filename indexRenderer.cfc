@@ -76,7 +76,7 @@
 			<div class="--Home -selection">
 				<a href="?a=user">Select User</a>
 				<a href="?a=project">Select Project</a>
-				<cfif structKeyExists( SEESION, 'CurrentUser' ) AND structKeyExists( SESSION, 'CurrentProject' ) AND SESSION[ 'CurrentUser' ][ 'Name' ] NEQ '' AND SESSION[ 'CurrentProject' ][ 'DisplayName' ] NEQ ''>
+				<cfif structKeyExists( SESSION, 'CurrentUser' ) AND structKeyExists( SESSION, 'CurrentProject' ) AND SESSION[ 'CurrentUser' ][ 'DisplayName' ] NEQ '' AND SESSION[ 'CurrentProject' ][ 'DisplayName' ] NEQ ''>
 					<a href="?a=addhours">Add Hours</a>
 				</cfif>
 			</div>
@@ -91,7 +91,7 @@
 
 			<form action="?a=processUser" method="post" class="--Users -selection">
 					<label>User Name</label>
-					<select name="SelectUser">
+					<select name="UserId">
 						<cfloop query="UserQuery">
 							<option value="#UserNumber#">#DisplayName#</option>
 						</cfloop>
@@ -110,7 +110,7 @@
 
 			<form action="?a=processProject" method="post" class="--Projects -selection">
 				<label>Project Name</label>
-				<select name="SelectProject">
+				<select name="Project">
 					<cfloop query="ProjectQuery">
 						<option value="#ProjectNumber#">#DisplayName#</option>
 					</cfloop>
@@ -128,8 +128,9 @@
 		<cfoutput>
 
 			<form action="?a=processAddHours" method="post" class="--Projects -selection">
-				<label>Project Name</label>
+				<label>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</label>
 				<input type="text" name="HoursWorked">
+				<input type="text" name="WorkDate" class="--Projects -workdate">
 				<textarea name="Notes"></textarea>
 				<input type="hidden" name="UserId" value="#SESSION[ 'CurrentUser' ][ 'UserNumber' ]#">
 				<input type="submit" name="select" class="btn -blue">
@@ -145,7 +146,7 @@
 		<cfoutput>
 
 			<form action="?a=processEditHours" method="post" class="--Projects -selection">
-				<label>Project Name</label>
+				<label>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</label>
 				<input type="text" name="HoursWorked">
 				<textarea name="Notes"></textarea>
 				<input type="hidden" name="UserId" value="#FormData[ 'UserId' ]#">

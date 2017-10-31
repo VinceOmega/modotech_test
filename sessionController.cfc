@@ -8,7 +8,7 @@
 			CurrentUser[ 'DisplayName' ] 		= '';
 			CurrentUser[ 'Supervisor' ] 		= '';
 			CurrentUser[ 'UserNumber' ] 		= '';
-			CurrentUser[ 'UserManager' ] 		= '';
+			CurrentUser[ 'UsersManaged' ] 		= '';
 
 			if( !structKeyExists( SESSION, 'CurrentUser' ) ){
 				
@@ -25,7 +25,7 @@
 
 	<cffunction name="storeCurrentUser" returntype="struct" output="true">
 		<cfargument name="UserQuery" 			type="query" 	required="yes">
-		<cfargument name="ManagedUserList" 		type="list"  	required="no" default="">
+		<cfargument name="ManagedUserList" 		type="string"  	required="no" default="">
 
 		<cfscript>
 
@@ -94,7 +94,7 @@
 				SESSION[ 'CurrentProject' ][ 'DisplayName' ] 	=  	row.DisplayName;
 				SESSION[ 'CurrentProject' ][ 'ProjectNumber' ] 	=  	row.ProjectNumber;
 				SESSION[ 'CurrentProject' ][ 'ClientName' ] 	=  	row.ClientName;
-				SESSION[ 'CurrentProject' ][ 'ClientNumber' ] 	= 	row.ClientNubmer;
+				SESSION[ 'CurrentProject' ][ 'ClientNumber' ] 	= 	row.ClientNumber;
 				
 			}
 

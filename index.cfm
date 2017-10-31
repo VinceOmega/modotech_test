@@ -25,43 +25,43 @@
 		switch(Action){
 
 			case 'home':
-				oIndex.fetchHome();
+				oIndex.fetchHome( FormData );
 				break;
 
 			case 'user':
-				oIndex.fetchUsers();
+				oIndex.fetchUsers( FormData );
 				break;
 
 			case 'processUser':
-				oIndex.fetchProcessUser();
+				oIndex.fetchProcessUser( FormData );
 				break;
 
 			case 'project':
-				oIndex.fetchProjects();
+				oIndex.fetchProjects( FormData );
 				break;
 
 			case 'processProject':
-				oIndex.fetchProcessProject();
+				oIndex.fetchProcessProject( FormData );
 				break;
 
 			case 'addhours':
-				oIndex.fetchAddHours();
+				oIndex.fetchAddHours( FormData );
 				break;
 
 			case 'processAddHours':
-				oIndex.fetchProcessAddHours();
+				oIndex.fetchProcessAddHours( FormData );
 				break;
 
 			case 'edithours':
-				oIndex.fetchEditHours();
+				oIndex.fetchEditHours( FormData );
 				break;
 
 			case 'processEditHours':
-				oIndex.fetchProcessEditHours();
+				oIndex.fetchProcessEditHours( FormData );
 				break;
 
 			default:
-				oIndex.fetchHome();
+				oIndex.fetchHome( FormData );
 				break;
 
 		}
@@ -74,5 +74,9 @@
 
 	}
 
+writeDump( var="#URL#", 		label="URL" );
+writeDump( var="#FORM#", 		label="FORM" );
+writeDump( var="#SESSION#", 	label="SESSION" );
+writeDump( var="#ARGUMENTS#",  	label="ARGUMENT" );
 
 </cfscript>

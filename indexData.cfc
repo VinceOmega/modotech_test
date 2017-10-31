@@ -94,10 +94,10 @@
 		<cfset var Results = queryNew( '' )>
 
 		<cfquery datasource="ModoInt" name="Results">
-			SELECT 		p.DisplayName, p.ClientNumber, p.ProjectNumber, c.ClientNumber
+			SELECT 		p.DisplayName, p.ClientNumber, p.ProjectNumber, c.Name as ClientName
 			FROM 		intProjects as p
 			INNER JOIN 	intClients 	as c ON c.ClientNumber = p.ClientNumber
-			WHERE 		UserNumber = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
+			WHERE 		ProjectNumber = <cfqueryparam value="#ProjectId#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
@@ -127,8 +127,8 @@
 						WorkDate
 					)
 					VALUES(
-						<cfqueryparam value="#ProjectStruct[ 'ClientNumber' ]#" cfsqltype="cf_sql_integer">,
-						NOW( ),
+						<cfqueryparam value="#ProjectStruct[ 'ClientNumber' ]#" 	cfsqltype="cf_sql_integer">,
+						<cfqueryparam value="#Now()#" 								cfsqltype="cf_sql_date">,
 						<cfqueryparam value="#FormData[ 'HoursWorked' ]#" 			cfsqltype="cf_sql_integer">,
 						<cfqueryparam value="#FormData[ 'Notes' ]#" 				cfsqltype="cf_sql_varchar">,
 						<cfqueryparam value="#ProjectStruct[ 'ProjectNumber' ]#" 	cfsqltype="cf_sql_integer">,
@@ -168,7 +168,7 @@
 				<cfquery datasource="ModoInt">
 					UPDATE intEntries
 					SET
-						DateModified 	= 	NOW( ),
+						DateModified 	= 	<cfqueryparam value="#Now()#" 						cfsqltype="cf_sql_date">,
 						HoursWorked 	= 	<cfqueryparam value="#FormData[ 'HoursWorked' ]#" 	cfsqltype="cf_sql_integer">,
 						Notes 			= 	<cfqueryparam value="#FormData[ 'Notes' ]#" 		cfsqltype="cf_sql_varchar">
 					WHERE EntryNumber 	=  	<cfqueryparam value="#FormData[ 'EntryNumber' ]#" 	cfsqltype="cf_sql_integer">
@@ -181,7 +181,7 @@
 				<cfcatch type="any">
 
 					<cftransaction action="rollback">
-					<cfdump var="#cfcatch#">
+					<cfdump var="#cfcatch#" abort="true">
 
 				</cfcatch>
 

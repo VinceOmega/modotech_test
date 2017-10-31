@@ -85,14 +85,16 @@
 
 		<cfscript>
 
-			var Results 		= queryNew( '' );
-			var SelectedUser 	= queryNew( '' );
-			var ManagedUsers 	= queryNew( '' );
+			var Results 			= queryNew( '' );
+			var SelectedUser 		= queryNew( '' );
+			var ManagedUsers 		= queryNew( '' );
+			var ManagedUsersList  	= '';
 
-			SelectedUser 		= oData.getUser( FormData[ 'User' ], IsAjax );
-			ManagedUsers 		= oData.getManagedUsers( FormData[ 'User' ] );
+			SelectedUser 		= oData.getUser( FormData[ 'UserId' ], IsAjax );
+			ManagedUsers 		= oData.getManagedUsers( FormData[ 'UserId' ] );
+			ManagedUsersList 	= valueList( ManagedUsers.UserNumber );
 
-			oSession.storeCurrentUser( SelectedUser, valueList( ManagedUsers.UserNumber ) );
+			oSession.storeCurrentUser( SelectedUser, ManagedUsersList );
 			location( '?a=home', false );
 
 
@@ -137,6 +139,8 @@
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
 
+			oRenderer.renderAddHours( FormData );
+
 		</cfscript>
 
 	</cffunction>
@@ -159,7 +163,11 @@
 
 					location( '?a=home&success=1', false );
 
-				} 
+				} else {
+
+					location( '?a=home&success=0', false );
+
+				}
 
 			} else {
 
@@ -168,6 +176,7 @@
 			}
 
 		</cfscript>
+
 	</cffunction>
 
 	<cffunction name="fetchEditHours" returntype="void" output="true">
@@ -178,6 +187,8 @@
 			var Results 			= queryNew( '' );
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
+
+			oRenderer.renderEditHours( FormData );
 
 		</cfscript>
 
@@ -198,9 +209,10 @@
 				Results 			= oData.editHours( FormData );
 
 				if( Results ){
-					oData.storeProject( SelectedProject );
 					location( '?a=home&success=1', false );
-				} 
+				} else{
+					location( '?a=home&success=0', false );
+				}
 
 			} else {
 				location( '?a=home&success=0', false );
