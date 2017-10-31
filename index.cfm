@@ -32,16 +32,32 @@
 				oIndex.fetchUsers();
 				break;
 
+			case 'processUser':
+				oIndex.fetchProcessUser();
+				break;
+
 			case 'project':
-				oIndex.fetchProject();
+				oIndex.fetchProjects();
+				break;
+
+			case 'processProject':
+				oIndex.fetchProcessProject();
 				break;
 
 			case 'addhours':
 				oIndex.fetchAddHours();
 				break;
 
+			case 'processAddHours':
+				oIndex.fetchProcessAddHours();
+				break;
+
 			case 'edithours':
 				oIndex.fetchEditHours();
+				break;
+
+			case 'processEditHours':
+				oIndex.fetchProcessEditHours();
 				break;
 
 			default:

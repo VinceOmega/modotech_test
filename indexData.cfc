@@ -8,10 +8,10 @@
 		<cfset var Results = queryNew( '' )>
 
 		<cfquery datasource="ModoInt" name="Results">
-		 	SELECT 		p.ClientNumber, p.DisplayName, p.ProjectNumber,
+		 	SELECT 		p.ClientNumber, p.DisplayName as ProjectName, p.ProjectNumber,
 		 				e.DateModified, e.EntryNumber, e.HoursWorked,
-		 				e.Notes, e.UserNumber, e.Workdate,
-		 				c.Name, u.Supervisor
+		 				e.Notes as ClientName, e.UserNumber, e.Workdate,
+		 				c.Name, u.Supervisor, u.DisplayName as UserName
 		 	FROM 		intEntries 		as e
 		 	INNER JOIN 	intClients 		as c ON c.ClientNumber 		= e.ClientNumber
 		 	INNER JOIN 	intUsers 		as u ON u.UserNumber 		= e.UserNumber
@@ -35,6 +35,22 @@
 		<cfquery datasource="ModoInt" name="Results">
 			SELECT 		DisplayName, Supervisor, UserNumber
 			FROM 		intUsers
+		</cfquery>
+
+		<cfreturn Results>
+
+	</cffunction>
+
+	<cffunction name="getManagedUsers" returntype="query" output="false">
+		<cfargument name="UserId"	type="string" 	required="true">
+		<cfargument name="isAjax" 	type="boolean" 	required="false" default="0">
+
+		<cfset var Results = queryNew( '' )>
+
+		<cfquery datasource="ModoInt" name="Results">
+			SELECT 		UserNumber
+			FROM 		intUsers
+			WHERE 		UserNumber = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
@@ -88,7 +104,7 @@
 
 	</cffunction>
 
-	<cffunction name="addHours" 	returntype="query" output="true">
+	<cffunction name="addHours" 	returntype="boolean" output="true">
 		<cfargument name="FormData" 		type="struct" required="true">
 		<cfargument name="UserStruct" 		type="struct" required="true">
 		<cfargument name="ProjectStruct" 	type="struct" required="true">
@@ -136,7 +152,7 @@
 
 	</cffunction>
 
-	<cffunction name="editHours" 	returntype="query" output="true">
+	<cffunction name="editHours" 	returntype="boolean" output="true">
 		<cfargument name="FormData" 	type="struct" required="true">
 
 		<cftransaction>
