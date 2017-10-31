@@ -153,7 +153,7 @@
 
 			if( IsNumeric( FormData[ 'UserId' ] ) AND ( FormData[ 'UserId' ] EQ CurrentUser[ 'UserNumber' ] ) OR ( FormData[ 'UserId' ] EQ CurrentUser[ 'Supervisor' ] ) ){
 
-				Results 				= oData.addHours( FormData, CurrentUser, CurrentProject );
+				Results 			= oData.addHours( FormData, CurrentUser, CurrentProject );
 
 				if( Results ){
 
@@ -193,13 +193,17 @@
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
 
-			Results 				= oData.setEditHours( FormData );
+			if( IsNumeric( FormData[ 'UserId' ] ) AND ( FormData[ 'UserId' ] EQ CurrentUser[ 'UserNumber' ] ) OR ( FormData[ 'UserId' ] EQ CurrentUser[ 'Supervisor' ] ) ){
 
-			if( Results ){
-				oData.storeProject( SelectedProject );
-				location( '?a=home&success=1', false );
+				Results 			= oData.editHours( FormData );
+
+				if( Results ){
+					oData.storeProject( SelectedProject );
+					location( '?a=home&success=1', false );
+				} 
+
 			} else {
-				location( '?a=home', false );
+				location( '?a=home&success=0', false );
 			}
 
 		</cfscript>
