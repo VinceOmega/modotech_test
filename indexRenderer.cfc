@@ -60,23 +60,25 @@
 							<th>User</th>
 							<th>Actions</th>
 						</tr>
-				<cfloop query="HomeData">
-					<tr>
-						<td>#ClientName#</td>
-						<td>#ProjectName#</td>
-						<td>#HoursWorked#</td>
-						<td>#dateFormat(WorkDate, 'mm-dd-yyyy')#</td>
-						<td>#UserName#</td>
-						<td><a href="?a=editHours" class="-editHours" title="Edit Hours">[Edit Hours]</a></td>
-					</tr>
-				</cfloop>
+						<cfloop query="HomeData">
+							<tr>
+								<td>#ClientName#</td>
+								<td>#ProjectName#</td>
+								<td>#HoursWorked#</td>
+								<td>#dateFormat(WorkDate, 'mm-dd-yyyy')#</td>
+								<td>#UserName#</td>
+								<td><a href="?a=editHours&entryNumber=#EntryNumber#&UserId=#UserNumber#" class="-editHours" title="Edit Hours">[Edit Hours]</a></td>
+							</tr>
+						</cfloop>
 					</tbody>
 				</table>
 			</div>
 			<div class="--Home -selection">
 				<a href="?a=user">Select User</a>
 				<a href="?a=project">Select Project</a>
-				<a href="?a=addhours">Add Hours</a>
+				<cfif structKeyExists( SEESION, 'CurrentUser' ) AND structKeyExists( SESSION, 'CurrentProject' ) AND SESSION[ 'CurrentUser' ][ 'Name' ] NEQ '' AND SESSION[ 'CurrentProject' ][ 'DisplayName' ] NEQ ''>
+					<a href="?a=addhours">Add Hours</a>
+				</cfif>
 			</div>
 		</cfoutput>
 
@@ -87,14 +89,14 @@
 
 		<cfoutput>
 
-			<form action="?a=processUser" method="post">
+			<form action="?a=processUser" method="post" class="--Users -selection">
 					<label>User Name</label>
 					<select name="SelectUser">
 						<cfloop query="UserQuery">
-							<option value="UserNumber">#DisplayName#</option>
+							<option value="#UserNumber#">#DisplayName#</option>
 						</cfloop>
 					</select>
-				</tbody>
+				<input type="submit" name="select" class="btn -blue">
 			</form>
 
 		</cfoutput>
@@ -106,14 +108,14 @@
 
 		<cfoutput>
 
-			<form action="?a=processProject" method="post">
-					<label>Project Name</label>
-					<select name="SelectProject">
-						<cfloop query="ProjectQuery">
-							<option value="Project">#DisplayName#</option>
-						</cfloop>
-					</select>
-				</tbody>
+			<form action="?a=processProject" method="post" class="--Projects -selection">
+				<label>Project Name</label>
+				<select name="SelectProject">
+					<cfloop query="ProjectQuery">
+						<option value="#ProjectNumber#">#DisplayName#</option>
+					</cfloop>
+				</select>
+				<input type="submit" name="select" class="btn -blue">
 			</form>
 
 		</cfoutput>
@@ -121,10 +123,38 @@
 	</cffunction>
 
 	<cffunction name="renderAddHours" returntype="void" output="true">
+		<cfargument name="FormData" type="struct" required="true">
+
+		<cfoutput>
+
+			<form action="?a=processAddHours" method="post" class="--Projects -selection">
+				<label>Project Name</label>
+				<input type="text" name="HoursWorked">
+				<textarea name="Notes"></textarea>
+				<input type="hidden" name="UserId" value="#SESSION[ 'CurrentUser' ][ 'UserNumber' ]#">
+				<input type="submit" name="select" class="btn -blue">
+			</form>
+
+		</cfoutput>
 
 	</cffunction>
 
 	<cffunction name="renderEditHours" returntype="void" output="true">
+		<cfargument name="FormData" type="struct" required="true">
+
+		<cfoutput>
+
+			<form action="?a=processEditHours" method="post" class="--Projects -selection">
+				<label>Project Name</label>
+				<input type="text" name="HoursWorked">
+				<textarea name="Notes"></textarea>
+				<input type="hidden" name="UserId" value="#FormData[ 'UserId' ]#">
+				<input type="hidden" name="EntryNumber" value="#FormData[ 'EntryNumber' ]#">
+				<input type="submit" name="select" class="btn -blue">
+			</form>
+
+		</cfoutput>
+
 
 	</cffunction>
 

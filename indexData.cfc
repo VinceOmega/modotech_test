@@ -28,7 +28,7 @@
 
 	</cffunction>
 
-	<cffunction name="getUsers" 	returntype="query" output="false">
+	<cffunction name="getUsers" 	returntype="query" 	output="false">
 
 		<cfset var Results = queryNew( '' )>
 
@@ -57,7 +57,7 @@
 
 	</cffunction>
 
-	<cffunction name="getUser" 		returntype="query" output="false">
+	<cffunction name="getUser" 		returntype="query" 	output="false">
 		<cfargument name="UserId"	type="string" 	required="true">
 		<cfargument name="isAjax" 	type="boolean" 	required="false" default="0">
 
@@ -73,7 +73,7 @@
 
 	</cffunction>
 
-	<cffunction name="getProjects" 	returntype="query" output="false">
+	<cffunction name="getProjects" 	returntype="query" 	output="false">
 
 		<cfset var Results = queryNew( '' )>
 
@@ -87,7 +87,7 @@
 
 	</cffunction>
 
-	<cffunction name="getProject" 	returntype="query" output="false">
+	<cffunction name="getProject" 	returntype="query" 	output="false">
 		<cfargument name="ProjectId" 	type="string" 	required="true">
 		<cfargument name="IsAjax" 		type="boolean" 	required="false" default="0">
 
@@ -104,16 +104,18 @@
 
 	</cffunction>
 
-	<cffunction name="addHours" 	returntype="boolean" output="true">
+	<cffunction name="addHours" 	returntype="boolean" output="false">
 		<cfargument name="FormData" 		type="struct" required="true">
 		<cfargument name="UserStruct" 		type="struct" required="true">
 		<cfargument name="ProjectStruct" 	type="struct" required="true">
+
+		<cfset Results = false>
 
 		<cftransaction>
 
 			<cftry>
 
-				<cfquery datasource="ModoInt" name="Results">
+				<cfquery datasource="ModoInt">
 					INSERT INTO intEntries
 					(
 						ClientNumber,
@@ -135,6 +137,8 @@
 					)
 				</cfquery>
 
+				<cfset Results = true>
+
 				<cftransaction action="commit">
 
 				<cfcatch type="any">
@@ -152,14 +156,16 @@
 
 	</cffunction>
 
-	<cffunction name="editHours" 	returntype="boolean" output="true">
+	<cffunction name="editHours" 	returntype="boolean" output="false">
 		<cfargument name="FormData" 	type="struct" required="true">
+
+		<cfset Results = false>
 
 		<cftransaction>
 
 			<cftry>
 
-				<cfquery datasource="ModoInt" name="Results">
+				<cfquery datasource="ModoInt">
 					UPDATE intEntries
 					SET
 						DateModified 	= 	NOW( ),
@@ -167,6 +173,8 @@
 						Notes 			= 	<cfqueryparam value="#FormData[ 'Notes' ]#" 		cfsqltype="cf_sql_varchar">
 					WHERE EntryNumber 	=  	<cfqueryparam value="#FormData[ 'EntryNumber' ]#" 	cfsqltype="cf_sql_integer">
 				</cfquery>
+
+				<cfset Results = true>
 
 				<cftransaction action="commit">
 

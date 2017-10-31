@@ -37,8 +37,10 @@
 
 			var CurrentUser = structNew( );
 			var HomeData 	= queryNew( '' );
+
 			CurrentUser 	= oSession.fetchCurrentUser( );
 			HomeData 		= oData.getHome( CurrentUser[ 'UserNumber' ] );
+
 			oRenderer.renderHome( FormData, HomeData );
 
 		</cfscript>
@@ -50,10 +52,10 @@
 
 		<cfscript>
 
-			var CurrentUser = structNew( );
 			var UserData 	= queryNew( '' );
-			CurrentUser 	= oSession.fetchCurrentUser( );
+
 			UsersData 		= oData.getUsers( );
+
 			oRenderer.renderUsers( UsersData );
 
 		</cfscript>
@@ -66,11 +68,12 @@
 
 		<cfscript>
 
-			var CurrentUser = structNew( );
+			var CurrentUser = structNew(  );
 			var UserData 	= queryNew( '' );
-			CurrentUser 	= oSession.fetchCurrentUser( );
+
+			CurrentUser 	= oSession.fetchCurrentUser(  );
 			UserData 		= oData.getUser( CurrentUser[ 'UserNumber' ], IsAjax );
-			oRenderer.renderUser( );
+			oRenderer.renderUser(  );
 
 		</cfscript>
 
@@ -82,14 +85,14 @@
 
 		<cfscript>
 
-			var Results 		= structNew(  );
-			var SelectedUser 	= structNew(  );
-			var ManagedUsers 	= structNew(  );
+			var Results 		= queryNew( '' );
+			var SelectedUser 	= queryNew( '' );
+			var ManagedUsers 	= queryNew( '' );
 
 			SelectedUser 		= oData.getUser( FormData[ 'User' ], IsAjax );
 			ManagedUsers 		= oData.getManagedUsers( FormData[ 'User' ] );
 
-			oSession.storeCurrentUser( SelectedUser, ManagedUsers );
+			oSession.storeCurrentUser( SelectedUser, valueList( ManagedUsers.UserNumber ) );
 			location( '?a=home', false );
 
 
@@ -115,11 +118,9 @@
 
 		<cfscript>
 
-			var Results 			= structNew(  );
-			var SelectedProject 	= structNew(  );
+			var SelectedProject 	= queryNew( '' );
 
 			SelectedProject 		= oData.getProject( FormData[ 'Project' ], IsAjax );
-			Results 				= oData.setProject( FormData[ 'Project' ] );
 
 			oSession.storeProject( SelectedProject );
 			location( '?a=home', false );
@@ -133,6 +134,8 @@
 
 		<cfscript>
 
+			var CurrentUser 		= oSession.fetchCurrentUser(  );
+			var CurrentProject 		= oSession.fetchProject(  );
 
 		</cfscript>
 
@@ -144,16 +147,24 @@
 
 		<cfscript>
 
-			var Results 			= structNew(  );
-			var CurrentUser 		= oSession.fetchCurrentUser( );
-			var CurrentProject 		= oSession.fetch
+			var Results 			= queryNew( '' );
+			var CurrentUser 		= oSession.fetchCurrentUser(  );
+			var CurrentProject 		= oSession.fetchProject(  );
 
-			Results 				= oData.addHours( FormData[ 'Project' ] );
+			if( IsNumeric( FormData[ 'UserId' ] ) AND ( FormData[ 'UserId' ] EQ CurrentUser[ 'UserNumber' ] ) OR ( FormData[ 'UserId' ] EQ CurrentUser[ 'Supervisor' ] ) ){
 
-			if( Results ){
-				location( '?a=home&success=1', false );
+				Results 				= oData.addHours( FormData, CurrentUser, CurrentProject );
+
+				if( Results ){
+
+					location( '?a=home&success=1', false );
+
+				} 
+
 			} else {
-				location( '?a=home', false );
+
+				location( '?a=home&success=0', false );
+
 			}
 
 		</cfscript>
@@ -164,6 +175,9 @@
 
 		<cfscript>
 
+			var Results 			= queryNew( '' );
+			var CurrentUser 		= oSession.fetchCurrentUser(  );
+			var CurrentProject 		= oSession.fetchProject(  );
 
 		</cfscript>
 
@@ -175,9 +189,11 @@
 
 		<cfscript>
 
-			var Results 			= structNew(  );
+			var Results 			= queryNew( '' );
+			var CurrentUser 		= oSession.fetchCurrentUser(  );
+			var CurrentProject 		= oSession.fetchProject(  );
 
-			Results 				= oData.setEditHours( FormData[ 'Project' ] );
+			Results 				= oData.setEditHours( FormData );
 
 			if( Results ){
 				oData.storeProject( SelectedProject );
