@@ -5,28 +5,28 @@
 	<cfset oSession 	= createObject( 'component', 'interview.Larry.sessionController' )>
 
 	<cffunction name="fetchHeader" returntype="void" output="true">
-		<cfargument name="FormData" required="false" default="#structNew( )#"> 
+		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfset var CurrentUser 				= structNew(  )>
-		
+
 		<cfset CurrentUser 					= oSession.fetchCurrentUser(  )>
 
 		<cfoutput>
 			#oRenderer.renderHeader( FormData, CurrentUser )#
-		</cfoutput>	
-		
+		</cfoutput>
+
 	</cffunction>
 
 	<cffunction name="fetchFooter" returntype="void" output="true">
 		<cfargument name="FormData" required="false" default="#structNew( )#">
 
 		<cfset var CurrentUser = structNew(  )>
-		
+
 		<cfset CurrentUser = oSession.fetchCurrentUser(  )>
 
 		<cfoutput>
 			#oRenderer.renderFooter( FormData, CurrentUser )#
-		</cfoutput>	
+		</cfoutput>
 
 	</cffunction>
 
@@ -140,6 +140,9 @@
 
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
+			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h:n:s")  ? DateAdd( "d" , -1, NOW() ) : NOW() );
+
+			FormData[ 'WorkHours' ] = WorkHours;
 
 			oRenderer.renderAddHours( FormData );
 
@@ -189,6 +192,9 @@
 			var Results 			= queryNew( '' );
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
+			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h:n:s")  ? DateAdd( "d" , -1, NOW() ) : NOW() );
+
+			FormData[ 'WorkHours' ] = WorkHours;
 
 			oRenderer.renderEditHours( FormData );
 
@@ -221,6 +227,21 @@
 			}
 
 		</cfscript>
+	</cffunction>
+
+	<cffunction name="fetchUserEntriesByWorkDate" returntype="void" output="true">
+		<cfargument name="FormData" type="struct" required="true">
+
+		<cfscript>
+
+			var UserEntries = structNew( '' );
+
+			UserEntries 	= oData.getUserEntriesByWorkDate( SESSION[ 'CurrentUser' ][ 'UserNumber' ], FormData[ 'WorkDate' ] );
+
+			oRenderer.renderUserEntriesByWorkDate( UserEntries );
+
+		</cfscript>
+
 	</cffunction>
 
 </cfcomponent>

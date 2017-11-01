@@ -201,4 +201,25 @@
 
 	</cffunction>
 
+	<cffunction name="getUserEntriesByDate" returntype="query" output="false">
+		<cfargument name="UserID" 		type="numeric" required="true">
+		<cfargument name="WorkDate" 	type="string" 	required="true">
+
+		<cfset var Results 	= queryNew( '' )>
+
+		<cfquery datasource="ModoInt" name="Results">
+			SELECT 		p.ClientNumber, p.DisplayName as ProjectName, p.ProjectNumber,
+		 				e.DateModified, e.EntryNumber, e.HoursWorked,
+		 				e.Notes, e.UserNumber, e.Workdate,
+		 				c.Name as ClientName, u.Supervisor, u.DisplayName as UserName
+		 	FROM 		intEntries 		as e
+		 	INNER JOIN 	intClients 		as c ON c.ClientNumber 		= e.ClientNumber
+		 	INNER JOIN 	intUsers 		as u ON u.UserNumber 		= e.UserNumber
+		 	INNER JOIN 	intProjects 	as p ON p.ProjectNumber 	= e.ProjectNumber
+		 	WHERE 	e.UserNumber 		= 		<cfqueryparam 	value="#Trim(UserId)#"  	cfsqltype="cf_sql_integer">
+		 	AND 	e.WorkDate 			LIKE 	<cfqueryparam 	value="%#Trim(WorkDate)#%" 	cfsqltype="cf_sql_datetime">
+		</cfquery>
+
+	</cffunction>
+
 </cfcomponent>

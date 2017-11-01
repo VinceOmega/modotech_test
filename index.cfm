@@ -16,7 +16,7 @@
 	oIndex 		= createObject( 'component', 'interview.Larry.indexController' );
 	oSession 	= createObject( 'component', 'interview.Larry.sessionController' );
 	FormData 	= FORM;
-	
+
 	try{
 
 		oIndex.fetchHeader();
@@ -70,6 +70,15 @@
 
 			case 'processEditHours':
 				oIndex.fetchProcessEditHours( FormData );
+				break;
+
+			case 'ajax':
+
+				if( URL['ajax'] EQ 'getEntries' ){
+					Results 	= queryNew( '' );
+					oIndex.fetchUserEntriesByWorkDate( FormData );
+				}
+
 				break;
 
 			default:

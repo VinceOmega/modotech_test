@@ -168,7 +168,7 @@
 					<input type="hidden" name="UserId" value="#SESSION[ 'CurrentUser' ][ 'UserNumber' ]#">
 					<h3>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</h3>
 					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked"><br>
-					<label for="WorkDate">Work Date</label><input type="text" name="WorkDate" class="--Projects -workdate"><br>
+					<label for="WorkDate">Work Date</label><input type="text" name="WorkDate" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
 					<label for="Notes">Notes</label><textarea name="Notes"></textarea><br>
 					<div class="-submission">
 						<input type="submit" name="select" class="btn btn-primary btn-lg -long">
@@ -190,14 +190,42 @@
 					<input type="hidden" name="UserId" value="#FormData[ 'UserId' ]#">
 					<input type="hidden" name="EntryNumber" value="#FormData[ 'EntryNumber' ]#">
 					<h3>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</h3><br>
-					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked"><br>
+					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
 					<label for="Notes">Notes</label><textarea name="Notes"></textarea><br>
 					<div class="-submission">
 						<input type="submit" name="select" class="btn btn-primary btn-lg -long">
-					</div>					
+					</div>
 				</form>
 			</div>
 
+		</cfoutput>
+
+	</cffunction>
+
+	<cffunction name="renderUserEntriesByWorkDate" returntype="void" output="true">
+		<cfargument name="UserEntries" type="struct" required="true">
+
+		<cfoutput>
+				<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<tbody>
+						<tr class="-table-header">
+							<th class="hidden-sm hidden-xs">Client Name</th>
+							<th>Project Name</th>
+							<th>Hours Worked</th>
+							<th>Work Date</th>
+							<th>User</th>
+						</tr>
+						<cfloop query="UserEntries">
+							<tr>
+								<td class="hidden-sm hidden-xs">#ClientName#</td>
+								<td>#ProjectName#</td>
+								<td>#HoursWorked#</td>
+								<td>#dateFormat(WorkDate, 'mm-dd-yyyy')#</td>
+								<td>#UserName#</td>
+							</tr>
+						</cfloop>
+					</tbody>
+				</table>
 		</cfoutput>
 
 	</cffunction>
