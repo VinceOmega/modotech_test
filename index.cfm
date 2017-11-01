@@ -75,7 +75,6 @@
 			case 'ajax':
 
 				if( URL['ajax'] EQ 'getEntries' ){
-					Results 	= queryNew( '' );
 					oIndex.fetchUserEntriesByWorkDate( FormData );
 				}
 

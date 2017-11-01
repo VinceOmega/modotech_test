@@ -117,8 +117,12 @@
 
 		<cfoutput>
 
-			<div class="--Users -selection">
-				<form action="?a=processUser" method="post" class="--Users -selection">
+			<div class="--Users -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+
+			</div>
+
+			<div class="--Users -selection col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<form action="?a=processUser" method="post" class="--Users -selection" id="hours-form">
 						<label>User Name</label>
 						<select name="UserId">
 							<cfloop query="UserQuery">
@@ -140,8 +144,12 @@
 
 		<cfoutput>
 
+			<div class="--Projects -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+
+			</div>
+
 			<div class="--Projects -selection">
-				<form action="?a=processProject" method="post" class="--Projects -selection">
+				<form action="?a=processProject" method="post" class="--Projects -selection" id="hours-form">
 					<label>Project Name</label>
 					<select name="Project">
 						<cfloop query="ProjectQuery">
