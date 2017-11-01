@@ -67,7 +67,7 @@
 	</cffunction>
 
 	<cffunction name="renderHome" returntype="void" output="true">
-		<cfargument name="FormData" 	type="struct"	required="false" 	default="#structNew( )#">
+		<cfargument name="FormData" 	type="struct"	required="false" 	default="#structNew(  )#">
 		<cfargument name="HomeData" 	type="query"	required="false" 	default="#queryNew( '' )#">
 
 		<cfset var index = queryNew('')>
@@ -92,7 +92,7 @@
 								<td>#dateFormat(WorkDate, 'mm-dd-yyyy')#</td>
 								<td>#UserName#</td>
 								<cfif structKeyExists( SESSION, 'CurrentUser' ) AND SESSION[ 'CurrentUser' ][ 'DisplayName' ] NEQ ''>
-									<td><a href="?a=editHours&entryNumber=#EntryNumber#&UserId=#UserNumber#" class="-editHours" title="Edit #UserName#'s Hours"><i class="fa fa-pencil" aria-hidden="true"/></a></td>
+									<td><a href="?a=editHours&entryNumber=#EntryNumber#&UserId=#UserNumber#&ProjectName=#ProjectName#" class="-editHours" title="Edit #UserName#'s Hours"><i class="fa fa-pencil" aria-hidden="true"/></a></td>
 								<cfelse>
 									<td><i class="fa fa-ban" aria-hidden="true"></i></td>
 								</cfif>
@@ -117,12 +117,8 @@
 
 		<cfoutput>
 
-			<div class="--Users -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
-
-			</div>
-
-			<div class="--Users -selection col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<form action="?a=processUser" method="post" class="--Users -selection" id="hours-form">
+			<div class="--Users -selection col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<form action="?a=processUser" method="post" class="--Users -selection">
 						<label>User Name</label>
 						<select name="UserId">
 							<cfloop query="UserQuery">
@@ -144,12 +140,8 @@
 
 		<cfoutput>
 
-			<div class="--Projects -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
-
-			</div>
-
 			<div class="--Projects -selection">
-				<form action="?a=processProject" method="post" class="--Projects -selection" id="hours-form">
+				<form action="?a=processProject" method="post" class="--Projects -selection">
 					<label>Project Name</label>
 					<select name="Project">
 						<cfloop query="ProjectQuery">
@@ -171,14 +163,19 @@
 
 		<cfoutput>
 
-			<div class="--AddHours -selection">
-				<form action="?a=processAddHours" method="post" class="--Projects -selection">
+			<div class="--Addhours -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+
+			</div>
+
+			<div class="--AddHours -selection col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<form action="?a=processAddHours" method="post" class="--Projects -selection" id="hours-form">
 					<input type="hidden" name="UserId" value="#SESSION[ 'CurrentUser' ][ 'UserNumber' ]#">
 					<h3>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</h3>
 					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked"><br>
 					<label for="WorkDate">Work Date</label><input type="text" name="WorkDate" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
 					<label for="Notes">Notes</label><textarea name="Notes"></textarea><br>
 					<div class="-submission">
+						<a href="##" class="btn btn-primary btn-lg -long" id="hours-check-btn">Check Hours</a>
 						<input type="submit" name="select" class="btn btn-primary btn-lg -long">
 					</div>
 				</form>
@@ -193,14 +190,19 @@
 
 		<cfoutput>
 
-			<div class="--EditHours -selection">
-				<form action="?a=processEditHours" method="post" class="--Projects -selection">
+			<div class="--Projects -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+
+			</div>
+
+			<div class="--EditHours -selection col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<form action="?a=processEditHours" method="post" class="--Projects -selection" id="hours-form">
 					<input type="hidden" name="UserId" value="#FormData[ 'UserId' ]#">
 					<input type="hidden" name="EntryNumber" value="#FormData[ 'EntryNumber' ]#">
-					<h3>Project - #SESSION[ 'CurrentProject' ][ 'DisplayName' ]#</h3><br>
+					<h3>Project - #FormData[ 'ProjectName' ]#</h3><br>
 					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
 					<label for="Notes">Notes</label><textarea name="Notes"></textarea><br>
 					<div class="-submission">
+						<a href="##" class="btn btn-primary btn-lg -long" id="hours-check-btn">Check Hours</a>
 						<input type="submit" name="select" class="btn btn-primary btn-lg -long">
 					</div>
 				</form>

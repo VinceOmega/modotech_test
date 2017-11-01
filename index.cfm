@@ -61,7 +61,7 @@
 				break;
 
 			case 'edithours':
-				if( SESSION['CurrentUser']['DisplayName'] EQ '' ){
+				if( SESSION['CurrentUser']['DisplayName'] EQ ''){
 					location( '?a=home&success=0', false );
 				}
 

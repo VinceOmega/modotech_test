@@ -140,9 +140,9 @@
 
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
-			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h:n:s")  ? DateAdd( "d" , -1, NOW() ) : NOW() );
+			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h")  ? DateAdd( "d", -1, NOW() ) : NOW() );
 
-			FormData[ 'WorkHours' ] = WorkHours;
+			FormData[ 'WorkDate' ] = dateFormat(WorkHours, 'mm/dd/yyyy');;
 
 			oRenderer.renderAddHours( FormData );
 
@@ -192,9 +192,9 @@
 			var Results 			= queryNew( '' );
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
-			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h:n:s")  ? DateAdd( "d" , -1, NOW() ) : NOW() );
+			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h")  ? DateAdd( "d", -1, NOW() ) : NOW() );
 
-			FormData[ 'WorkHours' ] = WorkHours;
+			FormData[ 'WorkDate' ] = dateFormat(WorkHours, 'mm/dd/yyyy');
 
 			oRenderer.renderEditHours( FormData );
 
@@ -234,7 +234,7 @@
 
 		<cfscript>
 
-			var UserEntries = structNew( '' );
+			var UserEntries = queryNew( '' );
 
 			UserEntries 	= oData.getUserEntriesByWorkDate( SESSION[ 'CurrentUser' ][ 'UserNumber' ], FormData[ 'WorkDate' ] );
 

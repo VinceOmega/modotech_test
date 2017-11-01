@@ -1,19 +1,26 @@
 $(window).ready(function(){
 
-		var form = $('#hours-form');
+
 
 		jQuery('.-workdate').datepicker();
 
-		$.ajax({
-			url: 	'?a=ajax&ajax=getEntries',
-			data:  	form,
-			method: "POST",
-			.done(function(html){
-				$('#hours-display').empty().append(html);
+		$('#hours-check-btn').mouseup(function(){
+			var form = $('#hours-form');
+			console.log(form);
+			$.ajax({
+				url: 	'?a=ajax&ajax=getEntries',
+				data:  	{
+					FormData: form
+				},
+				method: "POST"
 			})
-			.fail(function(){
-				console.log('something went wrong!?');
-			})
-			
-		});
+				.done(function(html){
+					$('#hours-display').empty().append(html);
+				})
+				.fail(function(){
+					console.log('something went wrong!?');
+				});
+				
+			});
+
 });
