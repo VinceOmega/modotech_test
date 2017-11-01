@@ -178,6 +178,7 @@
 					SET
 						DateModified 	= 	<cfqueryparam value="#Now()#" 								cfsqltype="cf_sql_date">,
 						HoursWorked 	= 	<cfqueryparam value="#Trim(FormData[ 'HoursWorked' ])#" 	cfsqltype="cf_sql_integer">,
+						WorkDate 		= 	<cfqueryparam value="#Trim(FormData[ 'WorkDate' ])#" 		cfsqltype="cf_sql_date">,
 						Notes 			= 	<cfqueryparam value="#Trim(FormData[ 'Notes' ])#" 			cfsqltype="cf_sql_varchar">
 					WHERE EntryNumber 	=  	<cfqueryparam value="#Trim(FormData[ 'EntryNumber' ])#" 	cfsqltype="cf_sql_integer">
 				</cfquery>

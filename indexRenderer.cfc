@@ -199,7 +199,8 @@
 					<input type="hidden" name="UserId" value="#FormData[ 'UserId' ]#">
 					<input type="hidden" name="EntryNumber" value="#FormData[ 'EntryNumber' ]#">
 					<h3>Project - #FormData[ 'ProjectName' ]#</h3><br>
-					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
+					<label for="HoursWorked">Hours Worked</label><input type="text" name="HoursWorked" class="--Projects -hoursworked" value=""><br>
+					<label for="WorkDate">Work Date</label><input type="text" name="WorkDate" class="--Projects -workdate" value="#FormData[ 'WorkDate' ]#"><br>
 					<label for="Notes">Notes</label><textarea name="Notes"></textarea><br>
 					<div class="-submission">
 						<a href="##" class="btn btn-primary btn-lg -long" id="hours-check-btn">Check Hours</a>
