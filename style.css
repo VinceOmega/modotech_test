@@ -1,0 +1,85 @@
+html, body{
+	height: 100%;
+}
+
+html{
+	font-family: 'Exo 2', sans-serif;
+}
+
+body{
+	background: #626788;
+}
+
+table tr{
+	background: #787f7f;
+	color: white;
+}
+
+table tr:hover{
+	background: #c8d4d4;
+	color: black;
+}
+
+i.fa-pencil, i.fa-ban{
+	color: black;
+}
+
+#content{
+	background: #FFF;
+	height: inherit;
+}
+
+.--Home, .--Users, .--Projects, .--AddHours, .--EditHours{
+	margin-top: 25px;
+}
+
+label{
+	width: 100px;
+}
+
+.-selection div.-submission{
+	text-align: center;
+}
+
+input[type='text'], select{
+	margin: 10px;
+    width: 200px
+}
+
+textarea{
+	margin: 10px;
+	width: 500px;
+	height: 200px;
+}
+
+.--header.-userInfo{
+	height: 50px;
+	display: block;
+	position: relative;
+}
+
+.--Home.-selection{
+	text-align: center;
+}
+
+.--Home .-table-header{
+	height: 10px;
+	background: #0052b9;
+	color: white;
+}
+
+a{
+	margin: 0;
+	cursor: pointer;
+}
+
+a:hover, a:active, a:visted{
+	text-decoration: none;
+}
+
+a.-long, input[type='submit'].-long{
+	width: 200px;
+}
+
+
+

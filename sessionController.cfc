@@ -104,4 +104,15 @@
 
 	</cffunction>
 
+	<cffunction name="invalidateSession" returntype="void" output="true">
+
+		<cfscript>
+
+			StructDelete( SESSION, 'CurrentUser' );
+			StructDelete( SESSION, 'CurrentProject' );
+
+		</cfscript>
+
+	</cffunction>
+
 </cfcomponent>

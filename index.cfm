@@ -2,7 +2,6 @@
 <cfscript>
 
 	param URL.a='home';
-	this.mappings['components'] = getDirectoryFromPath(getCurrentTemplatePath());
 
 	Action 		= '';
 	FormData 	= structNew();
@@ -14,9 +13,9 @@
 		FORM[ index ] = URL[ index ];
 	}
 
-	oIndex 		= createObject('component', 'interview.Larry.indexController');
+	oIndex 		= createObject( 'component', 'interview.Larry.indexController' );
+	oSession 	= createObject( 'component', 'interview.Larry.sessionController' );
 	FormData 	= FORM;
-
 	
 	try{
 
@@ -25,6 +24,11 @@
 		switch(Action){
 
 			case 'home':
+				if(StructKeyExists( FormData, 'reset' ) AND FormData[ 'reset' ] ){
+					oSession.invalidateSession();
+					location( '?a=home', false);
+				}
+
 				oIndex.fetchHome( FormData );
 				break;
 
@@ -45,6 +49,10 @@
 				break;
 
 			case 'addhours':
+				if( SESSION['CurrentUser']['DisplayName'] EQ '' ){
+					location( '?a=home&success=0', false );
+				}
+
 				oIndex.fetchAddHours( FormData );
 				break;
 
@@ -53,6 +61,10 @@
 				break;
 
 			case 'edithours':
+				if( SESSION['CurrentUser']['DisplayName'] EQ '' ){
+					location( '?a=home&success=0', false );
+				}
+
 				oIndex.fetchEditHours( FormData );
 				break;
 
@@ -73,10 +85,5 @@
 		writeDump( cfcatch );
 
 	}
-
-writeDump( var="#URL#", 		label="URL" );
-writeDump( var="#FORM#", 		label="FORM" );
-writeDump( var="#SESSION#", 	label="SESSION" );
-writeDump( var="#ARGUMENTS#",  	label="ARGUMENT" );
 
 </cfscript>

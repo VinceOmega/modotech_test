@@ -7,9 +7,9 @@
 	<cffunction name="fetchHeader" returntype="void" output="true">
 		<cfargument name="FormData" required="false" default="#structNew( )#"> 
 
-		<cfset var CurrentUser 				= structNew( )>
+		<cfset var CurrentUser 				= structNew(  )>
 		
-		<cfset CurrentUser 					= oSession.fetchCurrentUser( )>
+		<cfset CurrentUser 					= oSession.fetchCurrentUser(  )>
 
 		<cfoutput>
 			#oRenderer.renderHeader( FormData, CurrentUser )#
@@ -20,9 +20,9 @@
 	<cffunction name="fetchFooter" returntype="void" output="true">
 		<cfargument name="FormData" required="false" default="#structNew( )#">
 
-		<cfset var CurrentUser = structNew( )>
+		<cfset var CurrentUser = structNew(  )>
 		
-		<cfset CurrentUser = oSession.fetchCurrentUser( )>
+		<cfset CurrentUser = oSession.fetchCurrentUser(  )>
 
 		<cfoutput>
 			#oRenderer.renderFooter( FormData, CurrentUser )#
@@ -35,12 +35,12 @@
 
 		<cfscript>
 
-			var CurrentUser 	= structNew( );
-			var CurrentProject 	= structNew( );
+			var CurrentUser 	= structNew(  );
+			var CurrentProject 	= structNew(  );
 			var HomeData 		= queryNew( '' );
 
-			CurrentUser 	= oSession.fetchCurrentUser( );
-			CurrentProject 	= oSession.fetchProject( );
+			CurrentUser 	= oSession.fetchCurrentUser(  );
+			CurrentProject 	= oSession.fetchProject(  );
 			HomeData 		= oData.getHome( CurrentUser[ 'UserNumber' ], CurrentUser[ 'UsersManaged' ], CurrentProject[ 'ProjectNumber' ] );
 
 			oRenderer.renderHome( FormData, HomeData );
@@ -56,7 +56,7 @@
 
 			var UserData 	= queryNew( '' );
 
-			UsersData 		= oData.getUsers( );
+			UsersData 		= oData.getUsers(  );
 
 			oRenderer.renderUsers( UsersData );
 
@@ -109,7 +109,7 @@
 
 		<cfscript>
 
-			var ProjectData =  oData.getProjects( );
+			var ProjectData =  oData.getProjects(  );
 			oRenderer.renderProjects( ProjectData );
 
 		</cfscript>

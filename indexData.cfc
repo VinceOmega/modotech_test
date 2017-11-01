@@ -11,21 +11,21 @@
 		<cfquery datasource="ModoInt" name="Results">
 		 	SELECT 		p.ClientNumber, p.DisplayName as ProjectName, p.ProjectNumber,
 		 				e.DateModified, e.EntryNumber, e.HoursWorked,
-		 				e.Notes as ClientName, e.UserNumber, e.Workdate,
-		 				c.Name, u.Supervisor, u.DisplayName as UserName
+		 				e.Notes, e.UserNumber, e.Workdate,
+		 				c.Name as ClientName, u.Supervisor, u.DisplayName as UserName
 		 	FROM 		intEntries 		as e
 		 	INNER JOIN 	intClients 		as c ON c.ClientNumber 		= e.ClientNumber
 		 	INNER JOIN 	intUsers 		as u ON u.UserNumber 		= e.UserNumber
 		 	INNER JOIN 	intProjects 	as p ON p.ProjectNumber 	= e.ProjectNumber
 		 	<cfif UserId NEQ ''>
-		 		WHERE e.UserNumber 		= 	<cfqueryparam value="#UserId#"  cfsqltype="cf_sql_integer">
+		 		WHERE e.UserNumber 		= 	<cfqueryparam value="#Trim(UserId)#"  				cfsqltype="cf_sql_integer">
 		 		<cfif ProjectNumber NEQ ''>
-		 			AND e.ProjectNumber = <cfqueryparam value="#ProjectNumber#" cfsqltype="cf_sql_integer">
+		 			AND e.ProjectNumber = <cfqueryparam value="#Trim(ProjectNumber)#" 			cfsqltype="cf_sql_integer">
 		 		</cfif>
 		 		<cfif ManagedUserList NEQ ''>
-		 			OR u.UserNumber 	IN  ( <cfqueryparam value="#ManagedUserList#"  cfsqltype="cf_sql_integer" list="yes"> )
+		 			OR u.UserNumber 	IN  ( <cfqueryparam value="#Trim(ManagedUserList)#"  	cfsqltype="cf_sql_integer" list="yes"> )
 		 			<cfif ProjectNumber NEQ ''>
-		 				AND e.ProjectNumber = <cfqueryparam value="#ProjectNumber#" cfsqltype="cf_sql_integer">
+		 				AND e.ProjectNumber = <cfqueryparam value="#Trim(ProjectNumber)#" 		cfsqltype="cf_sql_integer">
 		 			</cfif>
 		 		</cfif>
 
@@ -58,7 +58,7 @@
 		<cfquery datasource="ModoInt" name="Results">
 			SELECT 		UserNumber
 			FROM 		intUsers
-			WHERE 		Supervisor = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
+			WHERE 		Supervisor = <cfqueryparam value="#Trim(UserId)#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
@@ -74,7 +74,7 @@
 		<cfquery datasource="ModoInt" name="Results">
 			SELECT 		DisplayName, Supervisor, UserNumber
 			FROM 		intUsers
-			WHERE 		UserNumber = <cfqueryparam value="#UserId#" cfsqltype="cf_sql_integer">
+			WHERE 		UserNumber = <cfqueryparam value="#Trim(UserId)#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
@@ -105,7 +105,7 @@
 			SELECT 		p.DisplayName, p.ClientNumber, p.ProjectNumber, c.Name as ClientName
 			FROM 		intProjects as p
 			INNER JOIN 	intClients 	as c ON c.ClientNumber = p.ClientNumber
-			WHERE 		ProjectNumber = <cfqueryparam value="#ProjectId#" cfsqltype="cf_sql_integer">
+			WHERE 		ProjectNumber = <cfqueryparam value="#Trim(ProjectId)#" cfsqltype="cf_sql_integer">
 		</cfquery>
 
 		<cfreturn Results>
@@ -135,13 +135,13 @@
 						WorkDate
 					)
 					VALUES(
-						<cfqueryparam value="#ProjectStruct[ 'ClientNumber' ]#" 	cfsqltype="cf_sql_integer">,
-						<cfqueryparam value="#Now()#" 								cfsqltype="cf_sql_date">,
-						<cfqueryparam value="#FormData[ 'HoursWorked' ]#" 			cfsqltype="cf_sql_integer">,
-						<cfqueryparam value="#FormData[ 'Notes' ]#" 				cfsqltype="cf_sql_varchar">,
-						<cfqueryparam value="#ProjectStruct[ 'ProjectNumber' ]#" 	cfsqltype="cf_sql_integer">,
-						<cfqueryparam value="#UserStruct[ 'UserNumber' ]#" 			cfsqltype="cf_sql_integer">,
-						<cfqueryparam value="#FormData[ 'WorkDate' ]#"  			cfsqltype="cf_sql_date">
+						<cfqueryparam value="#Trim(ProjectStruct[ 'ClientNumber' ])#" 	cfsqltype="cf_sql_integer">,
+						<cfqueryparam value="#Now()#" 									cfsqltype="cf_sql_date">,
+						<cfqueryparam value="#Trim(FormData[ 'HoursWorked' ])#" 		cfsqltype="cf_sql_integer">,
+						<cfqueryparam value="#Trim(FormData[ 'Notes' ])#" 				cfsqltype="cf_sql_varchar">,
+						<cfqueryparam value="#Trim(ProjectStruct[ 'ProjectNumber' ])#" 	cfsqltype="cf_sql_integer">,
+						<cfqueryparam value="#Trim(UserStruct[ 'UserNumber' ])#" 		cfsqltype="cf_sql_integer">,
+						<cfqueryparam value="#Trim(FormData[ 'WorkDate' ])#"  			cfsqltype="cf_sql_date">
 					)
 				</cfquery>
 
@@ -176,10 +176,10 @@
 				<cfquery datasource="ModoInt">
 					UPDATE intEntries
 					SET
-						DateModified 	= 	<cfqueryparam value="#Now()#" 						cfsqltype="cf_sql_date">,
-						HoursWorked 	= 	<cfqueryparam value="#FormData[ 'HoursWorked' ]#" 	cfsqltype="cf_sql_integer">,
-						Notes 			= 	<cfqueryparam value="#FormData[ 'Notes' ]#" 		cfsqltype="cf_sql_varchar">
-					WHERE EntryNumber 	=  	<cfqueryparam value="#FormData[ 'EntryNumber' ]#" 	cfsqltype="cf_sql_integer">
+						DateModified 	= 	<cfqueryparam value="#Now()#" 								cfsqltype="cf_sql_date">,
+						HoursWorked 	= 	<cfqueryparam value="#Trim(FormData[ 'HoursWorked' ])#" 	cfsqltype="cf_sql_integer">,
+						Notes 			= 	<cfqueryparam value="#Trim(FormData[ 'Notes' ])#" 			cfsqltype="cf_sql_varchar">
+					WHERE EntryNumber 	=  	<cfqueryparam value="#Trim(FormData[ 'EntryNumber' ])#" 	cfsqltype="cf_sql_integer">
 				</cfquery>
 
 				<cfset Results = true>
