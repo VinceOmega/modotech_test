@@ -163,7 +163,7 @@
 
 		<cfoutput>
 
-			<div class="--Addhours -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+			<div class="--Addhours -hours col-lg-4 col-md-4 col-sm-12 col-xs-12" id="hours-display">
 
 			</div>
 
@@ -190,7 +190,7 @@
 
 		<cfoutput>
 
-			<div class="--Projects -hours col-lg-6 col-md-6 col-sm-12 col-xs-12" id="hours-display">
+			<div class="--Projects -hours col-lg-4 col-md-4 col-sm-12 col-xs-12" id="hours-display">
 
 			</div>
 
