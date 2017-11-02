@@ -214,7 +214,7 @@
 	</cffunction>
 
 	<cffunction name="renderUserEntriesByWorkDate" returntype="void" output="true">
-		<cfargument name="UserEntries" type="struct" required="true">
+		<cfargument name="UserEntries" type="query" required="true">
 
 		<cfoutput>
 				<table class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

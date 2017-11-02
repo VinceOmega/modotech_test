@@ -140,7 +140,8 @@
 
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
-			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h")  ? DateAdd( "d", -1, NOW() ) : NOW() );
+			var Date 				= ( ( CurrentUser[ 'LastWorkDateUsed' ] NEQ '' ) ? CurrenUser[ 'LastWorkDateUsed' ] : NOW() ) ;
+			var WorkHours 			= ( DateCompare( Date, '12:00:00', "h")  ? DateAdd( "d", -1, Date ) : Date );
 
 			FormData[ 'WorkDate' ] = dateFormat(WorkHours, 'mm/dd/yyyy');;
 
@@ -192,7 +193,8 @@
 			var Results 			= queryNew( '' );
 			var CurrentUser 		= oSession.fetchCurrentUser(  );
 			var CurrentProject 		= oSession.fetchProject(  );
-			var WorkHours 			= ( DateCompare( NOW(), '12:00:00', "h")  ? DateAdd( "d", -1, NOW() ) : NOW() );
+			var Date 				= ( ( CurrentUser[ 'LastWorkDateUsed' ] NEQ '' ) ? CurrenUser[ 'LastWorkDateUsed' ] : NOW() );
+			var WorkHours 			= ( DateCompare( Date, '12:00:00', "h")  ? DateAdd( "d", -1, Date ) : Date );
 
 			FormData[ 'WorkDate' ] = dateFormat(WorkHours, 'mm/dd/yyyy');
 
@@ -236,7 +238,9 @@
 
 			var UserEntries = queryNew( '' );
 
-			UserEntries 	= oData.getUserEntriesByWorkDate( SESSION[ 'CurrentUser' ][ 'UserNumber' ], FormData[ 'WorkDate' ] );
+			FormData = deserializeJSON( FormData[ 'FormData' ] );
+
+			UserEntries 	= oData.getUserEntriesByWorkDate( SESSION[ 'CurrentUser' ][ 'UserNumber' ], FormData[ 3 ][ 'value' ] );
 
 			oRenderer.renderUserEntriesByWorkDate( UserEntries );
 

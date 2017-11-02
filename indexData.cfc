@@ -202,7 +202,7 @@
 
 	</cffunction>
 
-	<cffunction name="getUserEntriesByDate" returntype="query" output="false">
+	<cffunction name="getUserEntriesByWorkDate" returntype="query" output="false">
 		<cfargument name="UserID" 		type="numeric" required="true">
 		<cfargument name="WorkDate" 	type="string" 	required="true">
 
@@ -218,8 +218,10 @@
 		 	INNER JOIN 	intUsers 		as u ON u.UserNumber 		= e.UserNumber
 		 	INNER JOIN 	intProjects 	as p ON p.ProjectNumber 	= e.ProjectNumber
 		 	WHERE 	e.UserNumber 		= 		<cfqueryparam 	value="#Trim(UserId)#"  	cfsqltype="cf_sql_integer">
-		 	AND 	e.WorkDate 			LIKE 	<cfqueryparam 	value="%#Trim(WorkDate)#%" 	cfsqltype="cf_sql_datetime">
+		 	AND 	e.WorkDate 			= 		<cfqueryparam 	value="#Trim(WorkDate)#" 	cfsqltype="cf_sql_datetime">
 		</cfquery>
+
+		<cfreturn Results />
 
 	</cffunction>
 

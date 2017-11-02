@@ -19,7 +19,6 @@
 
 	try{
 
-		oIndex.fetchHeader();
 
 		switch(Action){
 
@@ -28,36 +27,49 @@
 					oSession.invalidateSession();
 					location( '?a=home', false);
 				}
-
+				oIndex.fetchHeader();
 				oIndex.fetchHome( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'user':
+				oIndex.fetchHeader();
 				oIndex.fetchUsers( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'processUser':
+				oIndex.fetchHeader();
 				oIndex.fetchProcessUser( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'project':
+				oIndex.fetchHeader();
 				oIndex.fetchProjects( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'processProject':
+				oIndex.fetchHeader();
 				oIndex.fetchProcessProject( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'addhours':
 				if( SESSION['CurrentUser']['DisplayName'] EQ '' ){
 					location( '?a=home&success=0', false );
 				}
-
+				oIndex.fetchHeader();
 				oIndex.fetchAddHours( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'processAddHours':
+				oSession.storeLastWorkDateUsed( FormData );
+				oIndex.fetchHeader();
 				oIndex.fetchProcessAddHours( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'edithours':
@@ -65,11 +77,15 @@
 					location( '?a=home&success=0', false );
 				}
 
+				oIndex.fetchHeader();
 				oIndex.fetchEditHours( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'processEditHours':
+				oIndex.fetchHeader();
 				oIndex.fetchProcessEditHours( FormData );
+				oIndex.fetchFooter();
 				break;
 
 			case 'ajax':
@@ -81,12 +97,13 @@
 				break;
 
 			default:
+				oIndex.fetchHeader();
 				oIndex.fetchHome( FormData );
+				oIndex.fetchFooter();
 				break;
 
 		}
 
-		oIndex.fetchFooter();
 
 	} catch(any cfcatch){
 

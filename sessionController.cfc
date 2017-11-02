@@ -9,6 +9,7 @@
 			CurrentUser[ 'Supervisor' ] 		= '';
 			CurrentUser[ 'UserNumber' ] 		= '';
 			CurrentUser[ 'UsersManaged' ] 		= '';
+			CurrentUser[ 'LastWorkDateUsed' ] 	= '';
 
 			if( !structKeyExists( SESSION, 'CurrentUser' ) ){
 				
@@ -45,7 +46,9 @@
 				
 			}
 
-			SESSION[ 'CurrentUser' ][ 'UsersManaged' ] 	= ManagedUserList;
+			SESSION[ 'CurrentUser' ][ 'UsersManaged' ] 		= ManagedUserList;
+			SESSION[ 'CurrentUser' ][ 'LastWorkDateUsed' ] 	= '';
+
 
 			return SESSION[ 'CurrentUser' ];
 
@@ -100,6 +103,21 @@
 
 			return SESSION[ 'CurrentProject' ];
 
+		</cfscript>
+
+	</cffunction>
+
+	<cffunction name="storeLastWorkDateUsed" returntype="void" output="true">
+		<cfargument name="FormData" type="struct" required="true">
+
+		<cfscript>
+
+			if(structKeyExists( SESSION, 'CurrentUser' ) ){
+
+				SESSION[ 'CurrentUser' ][ 'LastWorkDateUsed' ] = FormData[ 'WorkDate' ];
+
+			} 
+			
 		</cfscript>
 
 	</cffunction>
